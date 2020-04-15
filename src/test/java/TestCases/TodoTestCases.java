@@ -24,6 +24,4 @@ public class TodoTestCases {
     {
         //todo.todoDisplay("chrome");
     }
-
-
 }
