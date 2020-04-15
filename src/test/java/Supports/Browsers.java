@@ -1,6 +1,7 @@
 package Supports;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -38,8 +39,16 @@ public  class Browsers {
                                 System.out.println("wrong browser");
                 }
         }
-        public static void visit(How how, String locator)
+        public static void visit(String url)
         {
-                driver.findElement(how.buildBy(locator));
+                driver.get(url);
+        }
+        public static void click(How how, String locator)
+        {
+                driver.findElement(how.buildBy(locator)).click();
+        }
+        public static WebElement getElement(How how, String locator)
+        {
+               return driver.findElement(how.buildBy(locator));
         }
 }
