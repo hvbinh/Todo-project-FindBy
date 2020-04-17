@@ -28,7 +28,7 @@ public class TodoTestCases {
         String str = todo.checkPageLoad();
         Assert.assertEquals(str, "todos");
     }
-    @Test(priority = 2,description = "Verify that add task works correctly1 ")
+    @Test(priority = 2,description = "Verify that add task works correctly2 ")
     public void addTask()
     {
         todo.addTask("task 1");
