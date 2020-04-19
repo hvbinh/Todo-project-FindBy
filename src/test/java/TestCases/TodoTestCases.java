@@ -2,10 +2,13 @@ package TestCases;
 
 import Objects.TodoObject;
 import Supports.Browsers;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class TodoTestCases {
     TodoObject todo;
@@ -28,9 +31,27 @@ public class TodoTestCases {
         String str = todo.checkPageLoad();
         Assert.assertEquals(str, "todos");
     }
-    @Test(priority = 2,description = "Verify that add task works correctly2 ")
+    @Test(priority = 2,description = "Verify that add task works correctly")
     public void addTask()
     {
         todo.addTask("task 1");
     }
+    @Test(priority = 3,description = "Verify that add task works correctly")
+    public void addTask1()
+    {
+        todo.addTask("task 2");
+    }
+    @Test(priority = 4,description = "Verify that active list shows correctly")
+    public void showActiveList()
+    {
+        int active = todo.showListBaseOnTab("Active");
+        int activeOnAllList = todo.activeOnAllList();
+        Assert.assertEquals(active, activeOnAllList);
+    }
+    @Test(priority = 5,description = "Verify that completed list shows correctly")
+    public void markTaskComplete()
+    {
+        todo.selectTask("task 2");
+    }
+
 }
