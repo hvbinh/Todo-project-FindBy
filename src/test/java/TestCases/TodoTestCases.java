@@ -48,7 +48,7 @@ public class TodoTestCases {
         int activeOnAllList = todo.activeOnAllList();
         Assert.assertEquals(active, activeOnAllList);
     }
-    @Test(priority = 5,description = "Verify that completed list shows correctly")
+    @Test(priority = 5,description = "Verify that completed list shows correctly.")
     public void markTaskComplete()
     {
         todo.selectTask("task 2");
