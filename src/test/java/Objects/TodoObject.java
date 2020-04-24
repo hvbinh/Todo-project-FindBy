@@ -37,9 +37,17 @@ public class TodoObject extends LoadableComponent<TodoObject> {
     WebElement active_link;
     @FindBy (linkText = "All")
     WebElement all_link;
+    @FindBy (linkText = "Completed")
+    WebElement completed_link;
     @FindBy(className = "todo-list")
     WebElement todo_List;
+    @FindBy(xpath = "//*[@class='todo-count']/strong")
+    WebElement countActive;
 
+    public void markCompleted(String task)
+    {
+        Browsers.getDriver().findElement(By.xpath(String.format("//*[.='%s']/preceding-sibling::input", task))).click();
+    }
     public List<WebElement> allList()
     {
         return todo_List.findElements(By.tagName("li"));
@@ -103,6 +111,13 @@ public class TodoObject extends LoadableComponent<TodoObject> {
             showList(allList);
             return allList.size();
         }
+        else if(txt.equalsIgnoreCase(completed_link.getText()))
+        {
+            completed_link.click();
+            List<WebElement> allList = allList();
+            showList(allList);
+            return allList.size();
+        }
         return 0;
     }
     public void selectTask(String task)
@@ -113,10 +128,15 @@ public class TodoObject extends LoadableComponent<TodoObject> {
             if(e.getText().equalsIgnoreCase(task))
             {
                 System.out.println(e.getText());
-                e.findElement(By.xpath(String.format("//*[.='%s']/preceding-sibling::input", e.getText()))).click();
+                markCompleted(e.getText());
+                //e.findElement(By.xpath(String.format("//*[.='%s']/preceding-sibling::input", e.getText()))).click();
 
             }
         }
+    }
+    public int countActiveItem()
+    {
+        return Integer.parseInt(countActive.getText());
     }
 
 }
