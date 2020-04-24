@@ -44,14 +44,46 @@ public class TodoTestCases {
     @Test(priority = 4,description = "Verify that active list shows correctly")
     public void showActiveList()
     {
+
         int active = todo.showListBaseOnTab("Active");
         int activeOnAllList = todo.activeOnAllList();
         Assert.assertEquals(active, activeOnAllList);
     }
     @Test(priority = 5,description = "Verify that completed list shows correctly.")
-    public void markTaskComplete()
+    public void ShowCompletedList()
     {
+        int activeOnAllList = todo.countActiveItem();
         todo.selectTask("task 2");
+        todo.showListBaseOnTab("Completed");
+        int count = todo.countActiveItem();
+        Assert.assertEquals(count, activeOnAllList-1);
     }
+    @Test(priority = 6,description = "Verify that All list will show both active and completed task")
+    public void AllListContainActiveCompletedTask()
+    {
+        int active= todo.showListBaseOnTab("Active");
+        int completed = todo.showListBaseOnTab("Completed");
+        int all = todo.showListBaseOnTab("All");
+        Assert.assertEquals(all, active+completed);
+    }
+    @Test(priority = 7,description = "Verify that 'count item left' wil increase after adding new task")
+    public void countIncreaseAfterAddTask()
+    {
+        int i = todo.countActiveItem();
+        todo.showListBaseOnTab("All");
+        todo.addTask("task 3");
+        int j = todo.countActiveItem();
+        Assert.assertEquals(i+1, j);
+    }
+    @Test(priority = 8,description = "Verify that 'count item left' wil decreased after check active task")
+    public void countDecreaseAfterMarkCompleted()
+    {
+        int i = todo.countActiveItem();
+        todo.showListBaseOnTab("All");
+        todo.markCompleted("task 3");
+        int j = todo.countActiveItem();
+        Assert.assertEquals(j, i-1);
+    }
+
 
 }
