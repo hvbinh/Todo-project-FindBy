@@ -84,6 +84,25 @@ public class TodoTestCases {
         int j = todo.countActiveItem();
         Assert.assertEquals(j, i-1);
     }
+    @Test(priority = 9, description = "Verify that 'count item left' wil decreased after remove an active task")
+    public void countDecreaseAfterDeletedActiveTask()
+    {
+        int i = todo.countActiveItem();
+        todo.selectTabLink("all");
+        todo.deleteActiveTask("task 1");
+        int j = todo.countActiveItem();
+        Assert.assertEquals(j, i-1);
+
+    }
+    @Test(priority = 10, description = "Verify that remove task on all list works correctly")
+    public void removeTaskOnAllList()
+    {
+
+        int i = todo.countActiveItem();
+        todo.deleteActiveTask("task 3");
+        int j = todo.countActiveItem();
+        Assert.assertEquals(j, i);
+    }
 
 
 }
