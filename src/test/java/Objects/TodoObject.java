@@ -4,11 +4,13 @@ import Supports.Browsers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +46,35 @@ public class TodoObject extends LoadableComponent<TodoObject> {
     @FindBy(xpath = "//*[@class='todo-count']/strong")
     WebElement countActive;
 
+    public void selectTabLink(String link)
+    {
+        switch (link)
+        {
+            case "all": {
+                all_link.click();
+                break;
+            }
+            case "active":
+            {
+                active_link.click();
+                break;
+            }
+            case "completed":
+            {
+                completed_link.click();;
+                break;
+            }
+        }
+    }
+
+
     public void markCompleted(String task)
     {
         Browsers.getDriver().findElement(By.xpath(String.format("//*[.='%s']/preceding-sibling::input", task))).click();
+    }
+    public WebElement removeTask(String task)
+    {
+        return Browsers.getElement(How.XPATH, String.format("//div/label[.='%s']/following-sibling::button",task));
     }
     public List<WebElement> allList()
     {
@@ -137,6 +165,20 @@ public class TodoObject extends LoadableComponent<TodoObject> {
     public int countActiveItem()
     {
         return Integer.parseInt(countActive.getText());
+    }
+    public void deleteActiveTask(String task)
+    {
+
+        Actions act = new Actions(Browsers.getDriver());
+        List<WebElement> list = allList();
+        for(WebElement e:list)
+        {
+           if(e.getText().equalsIgnoreCase(task))
+           {
+               act.moveToElement(e).click(removeTask(task)).perform();
+               break;
+           }
+        }
     }
 
 }
